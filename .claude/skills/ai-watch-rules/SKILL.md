@@ -1,6 +1,6 @@
 ---
 name: ai-watch-rules
-description: Règles de scoring et de mise en forme pour les notes de veille IA et stack data. À charger automatiquement quand un agent prépare une note de veille technologique pour un Senior Data Engineer travaillant sur GCP/Airflow/BigQuery/Talend/Fabric.
+description: Règles de scoring et de mise en forme pour les notes de veille data & analytics. À charger automatiquement quand un agent prépare une note de veille technologique pour un Analytics Engineer travaillant sur BigQuery, Dataform, Salesforce/Marketing Cloud, Power BI, Dataplex Catalog, DuckDB, Streamlit et la gouvernance data.
 ---
 
 # AI Watch Rules — Scoring & Format
@@ -10,20 +10,25 @@ description: Règles de scoring et de mise en forme pour les notes de veille IA 
 ### Pertinence stack (40 pts max)
 
 Composants prioritaires (poids fort) :
-- Cloud Composer / Airflow 3.x → +40 si l'item touche directement
+- Cloud Composer / Airflow 3.x → +40
 - BigQuery → +35
-- Dataform → +30
-- Cloud Run / Cloud Build → +25
+- Dataform → +35 (cœur Analytics Engineer)
 - Anthropic Claude (Code, Cowork, API, Agent SDK, MCP) → +35
-- Microsoft Fabric / Power BI → +25
-- Talend Cloud → +25
-- IFS Cloud / Sage X3 → +25
+- Microsoft Fabric / Power BI → +35 (BI principale AE)
+- Salesforce / Marketing Cloud → +30
+- Data Catalog (Dataplex Universal Catalog, Coalesce, OpenMetadata, DataHub, Atlan) → +30
+- Data Governance / Data Quality (Great Expectations, Monte Carlo, Soda) → +25
+- DuckDB → +25 (SQL analytics engine)
+- Cloud Run / Cloud Build → +20
+- Terraform / Terragrunt → +20 (IaC GCP)
 - Pub/Sub, GCS, Vertex AI → +20
+- Streamlit → +20 (data apps)
+- Obsidian / PKM / documentation → +20
+- Talend Cloud → +15 (contexte intégration)
+- IFS Cloud / Sage X3 → +15 (contexte ERP)
 
 Composants secondaires (+10 à +15) :
 - Python / FastAPI / pgvector / PostgreSQL
-- Terraform / IaC GCP
-- Observability (OpenTelemetry, Datadog, GCP Operations)
 
 Composants ignorés (score 0 sur ce critère) :
 - AWS-only sans transposable
@@ -33,7 +38,7 @@ Composants ignorés (score 0 sur ce critère) :
 
 ### Actionnabilité (30 pts max)
 
-- **30 pts** : impact direct sur du code maintenu (Airflow DAG, requête BigQuery, job Talend) — exemple : breaking change Airflow 3.2, deprecation BQ
+- **30 pts** : impact direct sur du code maintenu (modèle Dataform, requête BigQuery, rapport Power BI, job Talend, pipeline catalog) — exemple : breaking change Dataform, deprecation BQ
 - **25 pts** : nouvelle feature qui peut remplacer ou améliorer une partie de la stack
 - **20 pts** : pattern architectural transposable à un projet en cours
 - **15 pts** : info utile pour une décision tech court terme
@@ -51,7 +56,7 @@ Composants ignorés (score 0 sur ce critère) :
 ### Profondeur technique (10 pts max)
 
 - **10 pts** : code, benchmarks chiffrés, architecture détaillée, retours d'expérience prod
-- **7 pts** : analyse technique sérieuse sans être deep-tech
+- **7 pts** : analyse technique sérieuse sans être deep-tech ; tutoriel pas-à-pas avec explication conceptuelle
 - **5 pts** : article généraliste correctement rédigé
 - **0 pt** : post LinkedIn vide, thread Twitter sans substance, communiqué de presse pur
 
@@ -93,11 +98,13 @@ sources_scrutees: {entier}
 
 {Résumé en 3-4 lignes max, en français, en tes propres mots. Jamais de copie-collé. Mentionne un chiffre ou un fait précis si l'article en contient.}
 
+**💡 Concept clé** : {1 ligne expliquant la notion sous-jacente, pour une montée en compétence vers Data Engineering}
+
 **🎯 Impact stack** : {composant impacté} — {type d'impact}
 
 **▶ Action** : {action recommandée} — {1 ligne pourquoi}
 
-**Tags** : `#veille/ia` `#stack/{composant}` `#tier/{1-3}`
+**Tags** : `#veille/analytics` `#stack/{composant}` `#tier/{1-3}`
 
 ---
 ```
@@ -126,8 +133,8 @@ sources_scrutees: {entier}
 
 ## Tags Obsidian recommandés
 
-- `#veille/ia` `#veille/data-eng` `#veille/cloud`
-- `#stack/composer` `#stack/bigquery` `#stack/dataform` `#stack/cloudrun` `#stack/talend` `#stack/fabric` `#stack/ifs` `#stack/claude`
+- `#veille/analytics` `#veille/gouvernance` `#veille/documentation`
+- `#stack/dataform` `#stack/bigquery` `#stack/salesforce` `#stack/powerbi` `#stack/fabric` `#stack/catalog` `#stack/governance` `#stack/duckdb` `#stack/streamlit` `#stack/composer` `#stack/cloudrun` `#stack/claude` `#stack/talend` `#stack/ifs`
 - `#impact/breaking` `#impact/feature` `#impact/risque` `#impact/opportunite`
 - `#tier/1` `#tier/2` `#tier/3`
 - `#action/creuser` `#action/prototyper` `#action/documenter` `#action/monitorer`

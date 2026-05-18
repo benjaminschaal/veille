@@ -3,8 +3,8 @@
 # La routine charge ce fichier à chaque run.
 
 version: 1
-updated: 2026-05-08
-owner: Yoann
+updated: 2026-05-18
+owner: Benjamin
 
 # Tier 1 — Signal fort par défaut
 tier_1:
@@ -20,6 +20,13 @@ tier_1:
     - anthropics/skills
     - modelcontextprotocol/servers
     - microsoft/Fabric-Samples
+    - microsoft/powerbi-desktop
+    - OpenMetadata/OpenMetadata
+    - datahub-project/datahub
+    - obsidianmd/obsidian-releases
+    - duckdb/duckdb
+    - streamlit/streamlit
+    - hashicorp/terraform
 
   blogs_officiels:
     - name: "Anthropic News"
@@ -40,9 +47,24 @@ tier_1:
     - name: "Google Cloud Release Notes - Dataform"
       url: "https://cloud.google.com/dataform/docs/release-notes"
       lookback_hours: 48
+    - name: "Google Cloud Release Notes - Dataplex"
+      url: "https://cloud.google.com/dataplex/docs/release-notes"
+      lookback_hours: 48
     - name: "Microsoft Fabric Blog"
       url: "https://blog.fabric.microsoft.com/"
       lookback_hours: 24
+    - name: "Power BI Blog"
+      url: "https://powerbi.microsoft.com/en-us/blog/"
+      lookback_hours: 24
+    - name: "Salesforce Developer Blog"
+      url: "https://developer.salesforce.com/blogs/"
+      lookback_hours: 48
+    - name: "Salesforce Marketing Cloud Blog"
+      url: "https://www.salesforce.com/blog/category/marketing/"
+      lookback_hours: 48
+    - name: "Coalesce Blog"
+      url: "https://coalesce.io/blog/"
+      lookback_hours: 72
     - name: "Talend Release Notes"
       url: "https://help.talend.com/r/en-US/Cloud/release-notes"
       lookback_hours: 48
@@ -61,6 +83,12 @@ tier_1:
       - "fine-tuning"
       - "quantization"
       - "MCP"
+      - "data quality"
+      - "data lineage"
+      - "data governance"
+      - "analytics engineering"
+      - "SQL"
+      - "DuckDB"
 
 # Tier 2 — Signal moyen
 tier_2:
@@ -78,6 +106,15 @@ tier_2:
     - name: "Airflow Newsletter"
       url: "https://airflow.apache.org/blog/"
       lookback_hours: 168
+    - name: "Analytics Engineering Weekly"
+      url: "https://analyticsengineers.club/"
+      lookback_hours: 168
+    - name: "Benn Stancil Substack"
+      url: "https://benn.substack.com/"
+      lookback_hours: 168
+    - name: "Datagen Newsletter"
+      url: "https://www.datagen.tech/resources/"
+      lookback_hours: 168
 
   blogs_data_eng:
     - name: "Astronomer Blog"
@@ -85,10 +122,22 @@ tier_2:
       lookback_hours: 48
     - name: "dbt Blog"
       url: "https://www.getdbt.com/blog"
-      lookback_hours: 48
+      lookback_hours: 72
     - name: "Databricks Engineering Blog"
       url: "https://www.databricks.com/blog/category/engineering"
       lookback_hours: 48
+    - name: "Monte Carlo Blog"
+      url: "https://www.montecarlodata.com/blog/"
+      lookback_hours: 72
+    - name: "Atlan Blog"
+      url: "https://atlan.com/blog/"
+      lookback_hours: 72
+
+# Tier 2.5 — Influenceurs
+influencers:
+  - name: "Christophe Blefari"
+    search_query: "site:linkedin.com christopheblefari data OR site:linkedin.com/in/christopheblefari"
+    lookback_hours: 168
 
 # Tier 3 — Signal à filtrer
 tier_3:
@@ -107,12 +156,25 @@ tier_3:
       - "data pipeline"
       - "LLM"
       - "agent"
+      - "salesforce"
+      - "powerbi"
+      - "coalesce"
+      - "obsidian"
+      - "data catalog"
+      - "data governance"
+      - "data quality"
+      - "marketing cloud"
+      - "duckdb"
+      - "streamlit"
+      - "terraform"
 
   reddit:
     subreddits:
       - r/dataengineering
       - r/MachineLearning
       - r/LocalLLaMA
+      - r/analytics
+      - r/salesforce
     min_upvotes: 100
     lookback_hours: 168
 
@@ -125,6 +187,11 @@ tier_3:
       - "mcp"
       - "airflow"
       - "data pipeline"
+      - "data catalog"
+      - "data governance"
+      - "data quality"
+      - "duckdb"
+      - "streamlit"
     lookback_hours: 168
 
 # Sources à exclure explicitement

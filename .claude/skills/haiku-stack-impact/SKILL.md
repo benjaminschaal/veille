@@ -1,117 +1,164 @@
 ---
 name: haiku-stack-impact
-description: Analyse l'impact d'une nouvelle technologique (release, paper, annonce produit) sur la stack data Haïku de HomeServe France. Couvre Cloud Composer/Airflow 3.x, BigQuery, Dataform, Cloud Run, Talend Cloud, Fabric/Power BI, IFS Cloud. À charger automatiquement quand un agent doit qualifier l'impact technique d'un item de veille pour un Senior Data Engineer.
+description: Analyse l'impact d'une nouvelle technologique sur la stack data d'un Analytics Engineer. Couvre BigQuery, Dataform, Salesforce/Marketing Cloud, Power BI/Fabric, Dataplex Catalog, Cloud Composer/Airflow, DuckDB, Streamlit, Terraform, Cloud Run, Claude/Anthropic.
 ---
 
-# Haïku Stack Impact Analysis
+# Analytics Engineer Stack Impact Analysis
 
 ## Composants de la stack et leurs zones de sensibilité
 
 ### Cloud Composer / Airflow 3.x
 
 **Sensibilités** :
-- Migration Airflow 2 → 3.1.x récemment finalisée. Tout breaking change Airflow 3.x est critique.
-- Patterns sensibles : `airflow.sdk` migration, callback rewrites, sensor patterns, DAG factory templates
-- Bugs prod connus à monitorer : Redis/Celery port exhaustion, Cloud NAT saturation, scheduler VARCHAR(20) callback_request, heartbeat timeouts
-- Versions concernées : Airflow 3.1.x sur Composer 3.x
+- Orchestration des pipelines Dataform et data apps
+- Patterns DAG, sensors, callbacks
+- Versions Airflow 3.x
 
 **Signaux à élever** :
-- Toute release `apache/airflow` 3.x.x
-- Toute release Cloud Composer (notes officielles GCP)
-- Tout post post-mortem ou retour d'expérience Airflow 3 en prod
-- Changements de provider GCP pour Airflow
+- Toute release apache/airflow 3.x.x
+- Breaking changes ou deprecations
+- Nouveaux providers GCP pour Airflow
+- Retours d'expérience Airflow en prod
 
 ### BigQuery
 
 **Sensibilités** :
-- SCD Type 2 historization jobs en prod
-- Modèles de churn scoring
-- Vector Search (POC GraphRAG)
-- Pipelines via Dataform
+- Cœur des pipelines analytiques AE
+- Modèles et vues analytiques
+- Pipelines Dataform
 - Coûts slot reservation
 
 **Signaux à élever** :
 - Nouveaux types de tables, syntaxes SQL, fonctions analytiques
-- Changements de pricing
-- Nouvelles capacités Vector Search / pgvector équivalents
-- Intégrations natives BigQuery ↔ Vertex AI
+- Changements de pricing ou slot policies
+- Nouvelles capacités (Vector Search, BQML, Vertex AI intégration)
+- Optimisations de perf (partitioning, clustering)
 
 ### Dataform
 
 **Sensibilités** :
+- Cœur de la transformation AE — modèles SQL, assertions, tests
 - Workspaces et CI/CD Dataform
-- Compilation et tests assertions
-- Intégration Git
+- Compilation et assertions
+- Intégration Git et deployment
 
 **Signaux à élever** :
 - Toute release Dataform (peu fréquent → signal fort quand ça arrive)
-- Nouveaux opérateurs SQLX
+- Nouveaux opérateurs SQLX ou fonctionnalités
 - Changements d'authentication / permissions
+- Évolutions de la documentation AE
 
-### Cloud Run
-
-**Sensibilités** :
-- Hébergement de l'agent compétitive intelligence (FastAPI + Gemini 2.5 Flash, 76 sources)
-- Hébergement futur des agents Avaudroit, PocketCRM
-- Cloud Run Jobs pour scrapers nocturnes
-
-**Signaux à élever** :
-- Nouvelles features Cloud Run (jobs, sidecars, GPU)
-- Limites mémoire / CPU / startup time
-- Intégrations avec Cloud Build / Artifact Registry
-
-### Talend Cloud
+### Power BI / Microsoft Fabric
 
 **Sensibilités** :
-- Pipeline OData Sage X3 → PostgreSQL → BigQuery (en cours)
-- Job `JI_GesteCommercieaux_SF_To_Sage` reverse-engineered
-- Conventions d'escaping `''` spécifiques
-- Bugs connus : JGit ref corruption, MemoCode compilation, FTPS tFTPPut SSL config, tREST OAuth2 pour Keycloak IFS
-
-**Signaux à élever** :
-- Releases Talend Studio et Cloud
-- Changements API Talend Cloud
-- Tout retour d'expérience migration Talend → autre outil
-
-### Microsoft Fabric / Power BI
-
-**Sensibilités** :
-- Pipeline CI/CD Fabric Git integration (GitHub Actions, Fabric REST API, FABRIC_GIT_CONNECTION_ID)
-- Documentation TMDL → Markdown des semantic models
-- Power BI desktop versions
+- Semantic layer et modèles Power BI
+- Fabric pipelines et CI/CD Git integration
+- Reports et dashboards
+- Integration avec BigQuery
 
 **Signaux à élever** :
 - Changements API Fabric REST
-- Nouvelles capacités TMDL
+- Nouvelles capacités TMDL ou semantic model
 - Évolutions Git integration
+- Nouvelles sources de données natives
 
-### IFS Cloud
+### DuckDB
 
 **Sensibilités** :
-- Migration en cours `hsv-migration-ifs`
-- Jobs FNDMIG (_L/_M pattern)
-- Idée prototype : staging table générique C1…C200 avec reconfig dynamique Source Name
-- OData API + Keycloak auth + PowerShell→Python port
+- Analytics local et testing
+- Requêtes analytiques rapides en Python/dbt
+- Extensions (spatial, Arrow, JSON)
+- Intégration BigQuery pour export/testing
 
 **Signaux à élever** :
-- Releases IFS Cloud officielles (peu fréquentes mais critiques)
-- Changements OData API
-- Patterns de migration FNDMIG documentés
+- Nouvelles releases DuckDB avec optimisations
+- Nouvelles extensions utiles (spatial, time series)
+- Benchmarks SQL et perf comparées BigQuery
+- Patterns DuckDB pour testing Dataform
+
+### Terraform / Terragrunt
+
+**Sensibilités** :
+- Provisioning GCP : BigQuery datasets, IAM, Cloud Run, Composer environments
+- Infrastructure as Code pour la stack data
+- Versioning et collaboration
+
+**Signaux à élever** :
+- Nouveaux providers GCP
+- Changements Terraform Cloud / Terraform Enterprise
+- Patterns Terragrunt pour réutilisabilité
+- Security best practices (IAM, state management)
+
+### Data Catalog & Gouvernance
+
+**Composants** : Dataplex Universal Catalog, Coalesce Catalog, OpenMetadata, Atlan, DataHub
+
+**Sensibilités** :
+- Lineage automatique Dataform → BigQuery
+- Metadata management et documentation
+- Data contracts et qualité
+- Glossaire métier
+- Découverte et accessibilité des données
+
+**Signaux à élever** :
+- Nouvelles features catalog (lineage, data profiling, data sharing)
+- Standards data contracts (dbt, OpenMetadata)
+- Intégrations BigQuery ↔ catalog
+- Frameworks gouvernance data
+
+### Salesforce / Marketing Cloud
+
+**Sensibilités** :
+- API REST Salesforce (Bulk API v2, SOQL)
+- Marketing Cloud API et Journey Builder
+- Salesforce Data Cloud
+- Connecteurs BigQuery ↔ Salesforce
+- ETL Salesforce → BigQuery
+
+**Signaux à élever** :
+- Changements API Salesforce ou versioning
+- Nouvelles intégrations Marketing Cloud
+- Évolutions Salesforce Data Cloud
+- Patterns de synchronisation / replication
+
+### Streamlit
+
+**Sensibilités** :
+- Data apps Python connectées BigQuery / Dataform
+- Dashboards interactifs
+- Prototypage rapide d'analyses
+
+**Signaux à élever** :
+- Nouvelles features Streamlit (multipage, database connectors)
+- Intégrations cloud (Streamlit Cloud vs auto-hosted)
+- Patterns de performance pour grandes datasets
 
 ### Claude / Anthropic
 
 **Sensibilités** :
-- Usage intensif Claude Code (loops `--dangerously-skip-permissions --remote-control`)
-- CLAUDE.md + LOOP_PROMPT.md methodology
-- Plugins, skills, MCP servers
-- Routines Claude Code (15/jour Max)
+- Claude Code pour l'automatisation de tâches AE
+- MCP servers pour integration data stack
+- Agent SDK pour agents IA data
+- APIs et pricing
 
 **Signaux à élever** :
-- Toute release Claude (modèles, features Cowork/Code, plugins)
-- Nouveaux MCP servers utiles pour data eng
+- Releases Claude (modèles, features Code/Cowork)
+- Nouveaux MCP servers pour data eng
 - Changements de pricing / quotas
 - Nouvelles capacités Agent SDK
-- Patterns de sécurité (sandboxing, IAM deny policies)
+- Patterns de sécurité et IAM
+
+### Obsidian / Documentation
+
+**Sensibilités** :
+- PKM et documentation de la stack
+- Wiki interne AE
+- Runbooks et guides
+
+**Signaux à élever** :
+- Nouvelles features Obsidian (templates, plugins)
+- Patterns de documentation technique
+- Tools complémentaires (Dataflakes, Git sync)
 
 ## Catégorisation de l'impact
 
