@@ -5,18 +5,23 @@
 # Usage: bash scripts/ntfy-notify.sh "<résumé en français>"
 #
 # Variables d'env attendues:
-#   NTFY_TOPIC        — topic ntfy (défaut: veille-data-benjamin)
+#   NTFY_TOPIC        — topic ntfy (défaut: veille-data)
 #   NTFY_PRIORITY     — priorité 1-5 (défaut: 3)
 #   NTFY_SERVER       — serveur ntfy (défaut: https://ntfy.sh)
-#   NOTIFY_EMAIL      — email destinataire (défaut: benjamin.schaal@free.fr)
+#   NOTIFY_EMAIL      — email destinataire (REQUIS - défini comme secret de routine)
 #   GITHUB_PR_URL     — URL de la PR créée (optionnel, ajouté au message)
 
 set -euo pipefail
 
-NTFY_TOPIC="${NTFY_TOPIC:-veille-data-benjamin}"
+NTFY_TOPIC="${NTFY_TOPIC:-veille-data}"
 NTFY_PRIORITY="${NTFY_PRIORITY:-3}"
 NTFY_SERVER="${NTFY_SERVER:-https://ntfy.sh}"
-NOTIFY_EMAIL="${NOTIFY_EMAIL:-benjamin.schaal@free.fr}"
+
+if [[ -z "${NOTIFY_EMAIL:-}" ]]; then
+  echo "❌ NOTIFY_EMAIL not set. Configure it as a Routine secret." >&2
+  exit 1
+fi
+
 TODAY_FR="$(LC_TIME=fr_FR.UTF-8 date +'%A %d %B %Y' 2>/dev/null || date +'%Y-%m-%d')"
 
 if [[ $# -lt 1 ]]; then

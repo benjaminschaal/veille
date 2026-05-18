@@ -20,7 +20,7 @@ Configuration d'une routine Claude Code qui exécute une veille quotidienne pour
 │ └── output :                                                 │
 │     ├── push vers benjaminschaal/wiki (branche claude/*)    │
 │     ├── PR auto vers main                                   │
-│     └── notif email via ntfy.sh (benjamin.schaal@free.fr)   │
+│     └── notif email via ntfy.sh (NOTIFY_EMAIL secret)       │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -53,9 +53,9 @@ Voir `SETUP.md` pour la procédure complète. TL;DR :
 1. Lance `bash scripts/bootstrap.sh` localement (clone + commits initiaux des 2 repos)
 2. Active "Claude Code on the web" et le connector GitHub sur `claude.ai/settings`
 3. Crée la routine sur `claude.ai/code/routines` en pointant vers ce repo
-4. Configure les secrets :
-   - `NTFY_TOPIC=veille-data-benjamin`
-   - `NOTIFY_EMAIL=benjamin.schaal@free.fr`
+4. Configure les secrets dans l'UI de la Routine :
+   - `NTFY_TOPIC` = votre topic ntfy (ex: `veille-data-{votre-nom}`)
+   - `NOTIFY_EMAIL` = votre email pour recevoir les notifications
 5. Lance un **Run now** manuel pour valider, puis active le schedule
 
 ## Calibration
