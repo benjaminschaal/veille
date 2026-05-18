@@ -1,0 +1,152 @@
+# Sources de veille IA + Stack Haïku
+# Édité au fil du temps selon priorités du moment.
+# La routine charge ce fichier à chaque run.
+
+version: 1
+updated: 2026-05-08
+owner: Yoann
+
+# Tier 1 — Signal fort par défaut
+tier_1:
+
+  github_releases:
+    - apache/airflow
+    - googleapis/python-bigquery
+    - googleapis/python-dataform
+    - GoogleCloudPlatform/cloud-composer
+    - dataform-co/dataform
+    - anthropics/anthropic-sdk-python
+    - anthropics/claude-code
+    - anthropics/skills
+    - modelcontextprotocol/servers
+    - microsoft/Fabric-Samples
+
+  blogs_officiels:
+    - name: "Anthropic News"
+      url: "https://www.anthropic.com/news"
+      lookback_hours: 24
+    - name: "Anthropic Engineering"
+      url: "https://www.anthropic.com/engineering"
+      lookback_hours: 48
+    - name: "Google Cloud Blog - Data Analytics"
+      url: "https://cloud.google.com/blog/products/data-analytics"
+      lookback_hours: 24
+    - name: "Google Cloud Release Notes - Composer"
+      url: "https://cloud.google.com/composer/docs/release-notes"
+      lookback_hours: 24
+    - name: "Google Cloud Release Notes - BigQuery"
+      url: "https://cloud.google.com/bigquery/docs/release-notes"
+      lookback_hours: 24
+    - name: "Google Cloud Release Notes - Dataform"
+      url: "https://cloud.google.com/dataform/docs/release-notes"
+      lookback_hours: 48
+    - name: "Microsoft Fabric Blog"
+      url: "https://blog.fabric.microsoft.com/"
+      lookback_hours: 24
+    - name: "Talend Release Notes"
+      url: "https://help.talend.com/r/en-US/Cloud/release-notes"
+      lookback_hours: 48
+
+  arxiv:
+    categories:
+      - cs.LG
+      - cs.AI
+      - cs.DB
+    keywords:
+      - "agent"
+      - "LLM"
+      - "RAG"
+      - "data engineering"
+      - "observability"
+      - "fine-tuning"
+      - "quantization"
+      - "MCP"
+
+# Tier 2 — Signal moyen
+tier_2:
+
+  newsletters:
+    - name: "Latent Space"
+      url: "https://www.latent.space/"
+      lookback_hours: 48
+    - name: "The Batch (DeepLearning.AI)"
+      url: "https://www.deeplearning.ai/the-batch/"
+      lookback_hours: 168
+    - name: "Data Engineering Weekly"
+      url: "https://www.dataengineeringweekly.com/"
+      lookback_hours: 168
+    - name: "Airflow Newsletter"
+      url: "https://airflow.apache.org/blog/"
+      lookback_hours: 168
+
+  blogs_data_eng:
+    - name: "Astronomer Blog"
+      url: "https://www.astronomer.io/blog/"
+      lookback_hours: 48
+    - name: "dbt Blog"
+      url: "https://www.getdbt.com/blog"
+      lookback_hours: 48
+    - name: "Databricks Engineering Blog"
+      url: "https://www.databricks.com/blog/category/engineering"
+      lookback_hours: 48
+
+# Tier 3 — Signal à filtrer
+tier_3:
+
+  hacker_news:
+    min_points: 100
+    lookback_hours: 24
+    keywords_must_match:
+      - "airflow"
+      - "bigquery"
+      - "dataform"
+      - "claude"
+      - "anthropic"
+      - "talend"
+      - "fabric"
+      - "data pipeline"
+      - "LLM"
+      - "agent"
+
+  reddit:
+    subreddits:
+      - r/dataengineering
+      - r/MachineLearning
+      - r/LocalLLaMA
+    min_upvotes: 100
+    lookback_hours: 168
+
+  github_trending:
+    languages:
+      - python
+      - typescript
+    keywords:
+      - "agent"
+      - "mcp"
+      - "airflow"
+      - "data pipeline"
+    lookback_hours: 168
+
+# Sources à exclure explicitement
+blacklist:
+  domains:
+    - medium.com/@*
+  keywords_in_title:
+    - "10 reasons why"
+    - "ultimate guide"
+    - "you should be using"
+
+# Modificateurs de scoring
+scoring_modifiers:
+  tier_1_bonus: 5
+  tier_3_malus: -5
+  paywall_malus: -10
+
+# Limites du run
+limits:
+  max_items_collected: 100
+  max_items_in_note: 15
+  max_top_items: 5
+  max_signaux_faibles: 3
+  min_score_threshold: 60
+  fallback_threshold: 50

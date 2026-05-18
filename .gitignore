@@ -1,0 +1,30 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python (au cas où on ajoute des scripts py plus tard)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+.env.local
+
+# Logs
+*.log
+
+# Temp
+/tmp/
+*.tmp
+
+# Claude Code local state (ne PAS ignorer .claude/skills qui est versionné)
+.claude/cache/
+.claude/sessions/
